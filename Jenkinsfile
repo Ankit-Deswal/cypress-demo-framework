@@ -38,7 +38,7 @@ pipeline {
         
         stage('Testing') {
             steps {
-                sh "npm cypress cache clear"
+            
                 sh "npm init"
                 sh "npm install"
                 sh "npm cypress run --browser ${BROWSER} --spec ${SPEC}"
