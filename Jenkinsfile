@@ -1,9 +1,4 @@
-import groovy.json.JsonOutput
 
-def COLOR_MAP = [
-    'SUCCESS': 'good', 
-    'FAILURE': 'danger',
-]
 
 
 
@@ -45,8 +40,8 @@ pipeline {
         
         stage('Testing') {
             steps {
-                bat "npm i"
-                bat "npx cypress run --browser ${BROWSER} --spec ${SPEC}"
+                sh "npm i"
+                sh "npx cypress run --browser ${BROWSER} --spec ${SPEC}"
             }
         }
         
