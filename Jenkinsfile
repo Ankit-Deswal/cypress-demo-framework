@@ -41,7 +41,7 @@ pipeline {
             
                
                 sh "npm install"
-                sh "npm cypress run --browser ${BROWSER} --spec ${SPEC}"
+                sh "cypress run --browser ${BROWSER} --spec ${SPEC}"
             }
         }
         
