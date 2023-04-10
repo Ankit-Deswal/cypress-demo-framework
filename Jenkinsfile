@@ -5,9 +5,6 @@ def COLOR_MAP = [
     'FAILURE': 'danger',
 ]
 
-def getBuildUser() {
-    return currentBuild.rawBuild.getCause(Cause.UserIdCause).getUserId()
-}
 
 
 pipeline {
@@ -17,9 +14,7 @@ pipeline {
     
     //The environment directive specifies a sequence of key-value pairs which will be defined
     //as environment variables for all steps, or stage-specific steps, depending on where the environment directive is located within the Pipeline.
-    environment {
-        BUILD_USER = ''
-    }
+   
     
     //The parameters directive provides a list of parameters that a user should provide when triggering the Pipeline.
     //The values for these user-specified parameters are made available to Pipeline steps via the params object, see
@@ -63,20 +58,7 @@ pipeline {
     }
 
     post {
-        always {
-            //The script step takes a block of Scripted Pipeline and executes that in the Declarative Pipeline. 
-            //For most use-cases, the script step should be unnecessary in Declarative Pipelines, but it can provide
-            //a useful "escape hatch." script blocks of non-trivial size and/or complexity should be moved into Shared Libraries instead.
-            script {
-                BUILD_USER = getBuildUser()
-            }
-            
-            slackSend channel: '#jenkins-example',
-                color: COLOR_MAP[currentBuild.currentResult],
-                message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} by ${BUILD_USER}\n Tests:${SPEC} executed at ${BROWSER} \n More info at: ${env.BUILD_URL}HTML_20Report/"
-            
-            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'cypress/report', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
-            deleteDir()
+       
         }
     }
 }
