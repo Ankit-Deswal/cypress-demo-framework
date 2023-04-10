@@ -52,8 +52,5 @@ pipeline {
         }
     }
 
-    post {
-       
-        }
-    }
+    
 }
